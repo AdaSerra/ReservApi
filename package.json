@@ -1,0 +1,31 @@
+{
+  "name": "reservapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test:api": "mocha ./testing/api_test.js --timeout 7000 --ui tdd",
+    "test:login": "mocha ./testing/login_test.js --timeout 7000 --ui tdd",
+    "start": "node ./backend/server.js use",
+    "build:dev": "webpack --config ./frontend/webpack.config.js"
+  },
+  "keywords": [
+    "express",
+    "react",
+    "antdesign",
+    "server",
+    "api"
+  ],
+  "author": "Adalberto Serra",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "chai-http": "^4.4.0",
+    "mocha": "^11.0.1"
+  },
+  "workspaces": [
+    "backend/",
+    "frontend/"
+  ]
+}

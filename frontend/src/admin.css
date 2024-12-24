@@ -1,0 +1,40 @@
+h1{
+   margin:0 auto;
+   text-align: center;
+   padding:20px;
+}
+
+#root {
+    display:flex;
+   
+    margin:0 auto;
+    width: 1200px;
+    
+    flex-direction: column;
+    
+}
+
+.top{
+  
+    text-align:center;
+    display:flex;
+    
+    
+    margin:0 auto
+}
+#message {
+    content:'';
+    margin:0 auto;
+    flex: 0 0 80%
+}
+
+.top:last-child {
+   
+    flex: 0 0 10%
+    
+}
+
+ul{
+    list-style-type: none;
+    padding:0
+}
