@@ -1,6 +1,5 @@
-import {Reserv} from './database.js'
+import {Reservs} from './database.js'
 import {phoneControl,nameControl,dateControl} from '../../common/controller.js';
-import {optionsDate} from '../../common/time.js'
 import {isAuthenticated } from './middlewares.js';
 import env from '../../common/env.js'
 env()
@@ -18,12 +17,12 @@ export default function appRoutes(app) {
         if(!id) {res.status(400).json({error:"Missing id"})}
         else {
           try {
-              const findRes= await Reserv.findById(id)
-              if(findRes)
-              {res.json(findRes)}
-              else {res.status(404).json({error:"Reservation not found"})}
+              
+              Reservs('GET',id,res)
+  
           }
-          catch(err) {console.error("Error: ",err);res.status(500).json({error:"Invalid id"})}
+          catch(err) {
+            console.error("Error: ",err);res.status(500).json({error:"Invalid id"})}
         }
       })
       .post(async function (req,res) {
@@ -39,21 +38,14 @@ export default function appRoutes(app) {
         else if (dateControl(date)) {res.status(400).json({message:"Invalid date"})}
         else {
             try {
-              const findRes= await Reserv.findOne({date:date})
-              if(findRes) {res.status(400).json({message:"Date busy"})}
-              else {
-                const newRes = new Reserv({
-                  name:name,
-                  phone:phone,
-                  date:date
-                });
-                const saveRes = await newRes.save();
-    
-                const formattedDate = saveRes.date.toLocaleDateString('en-US',optionsDate)
-                //const formattedTime= saveRes.date.toLocaleTimeString('en-US',optionsDate)
-                return res.status(201).json({message:`Reservation for ${saveRes.name} confirmed at ${formattedDate}`,info:saveRes})         
-    
+              const newRes={
+                name:name,
+                phone:phone,
+                date:date
               }
+              Reservs('POST',newRes,res)
+          
+              
             }
             catch (err) {res.status(500).json({error:err})}
         }
@@ -71,14 +63,14 @@ export default function appRoutes(app) {
         else if (dateControl(date)) {res.status(400).json({message:"Invalid date"})}
         else{
           try{
-          const update = {
+          const arg = {
             name:name,
             phone:phone,
-            date:date
+            date:date,
+            id:id
           }
-        const findUpd = await Reserv.findByIdAndUpdate(id,update)
-         if(findUpd) {return res.json({message:`Reservation ${id} successfully update`})}
-          else {return res.status(404).json({message:"Reservation not found"})}
+          Reservs('PUT',arg,res)
+
         }
           catch(err) {return res.status(500).json({message:err})}
        }
@@ -87,9 +79,7 @@ export default function appRoutes(app) {
         const id=req.query.id
         if (!id) {res.status(400).json({error:"Missing Id"})}
         try {
-            const findDelete= await Reserv.findByIdAndDelete(id);
-            if(findDelete) {return res.json({message:`Reservation ${id} successfully delete`})}
-            else {return res.status(404).json({message:`Reservation ${id} not delete`})}
+            Reservs('DELETE',id,res)
         }
        catch (err) {
         return res.status(500).json({message:err})
@@ -100,7 +90,7 @@ export default function appRoutes(app) {
         
         .get(isAuthenticated,async function (req,res) {
              
-              const result = await Reserv.find({})
+              const result = await Reservs('GETALL',null,null)
              res.render('admin',{ result: JSON.stringify(result) })
               
         })

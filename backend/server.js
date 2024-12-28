@@ -1,6 +1,6 @@
 import express from'express';
 import bodyParser from'body-parser';
-import { reqInfo, middleConnectionDb } from './misc/middlewares.js';
+import { reqInfo } from './misc/middlewares.js';
 import session from'express-session';
 import appRoutes from './misc/routes.js';
 import env from '../common/env.js'
@@ -23,7 +23,7 @@ app.use(session({
 app.set('view engine', 'ejs');
 app.set('views', process.cwd()+'/frontend/views');
 app.use('/public', express.static(process.cwd() + '/frontend/dist'));
-app.use(middleConnectionDb)
+
 
 process.argv[2] === 'use' ? app.use(reqInfo) : null
 

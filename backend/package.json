@@ -6,21 +6,20 @@
     "type": "module",
     "private": true,
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [
-      "express",
-      "server",
-      "api"
+        "express",
+        "server",
+        "api"
     ],
     "author": "Adalberto Serra",
     "license": "ISC",
     "dependencies": {
         "bcryptjs": "^2.4.3",
-        "body-parser": "^1.20.3",     
+        "body-parser": "^1.20.3",
         "ejs": "^3.1.10",
         "express": "^4.21.2",
-        "express-session": "^1.18.1",
-        "mongoose": "^8.9.0"
-      }
-  }
+        "express-session": "^1.18.1"
+    }
+}

@@ -1,14 +1,5 @@
-import {connectionDb} from './database.js'
 
-async function middleConnectionDb (req, res, next) { 
-    try { 
-     await connectionDb()
-     next(); } 
 
-    catch (error) { 
-      console.error("Error: ",error);
-      return res.status(500).send("Server issue, try later")    
-     } };
   
 function isAuthenticated(req, res, next) { 
     if (req.session.user) { 
